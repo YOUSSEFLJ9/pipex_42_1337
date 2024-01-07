@@ -1,0 +1,12 @@
+a.out
+dd
+env_path.c
+ft_split.c
+ft_strchr.c
+ft_strjoin.c
+ft_strlen.c
+ft_strncmp.c
+ft_strtok.c
+main.c
+pipex.h
+pipex_otuls.c
