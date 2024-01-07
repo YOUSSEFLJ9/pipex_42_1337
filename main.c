@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:08:26 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/07 04:25:59 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/07 08:03:15 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,16 @@ void	child_1(char **av, int *fd, char **ev)
 	char	**cmd1;
 	char	*paths;
 	char	*command;
+	int		infile;
 
+	close(fd[0]);
+	infile = open(av[1], O_RDONLY);
+	if (infile == -1)
+		error_and_exit(av[1], 1);
+	dup2(infile, 0);
+	close(infile);
+	dup2(fd[1], 1);
+	close(fd[1]);
 	cmd1 = ft_split(av[2], ' ');
 	if (access(cmd1[0],F_OK) == 0)
 		execve(cmd1[0], &cmd1[0], NULL);
@@ -33,9 +42,7 @@ void	child_1(char **av, int *fd, char **ev)
 				paths = ft_strtok(NULL, ":");
 		}
 	}
-	perror(*cmd1);
-	fprintf(stderr, "Error code: %d\n", errno);
-	exit(1);
+	error_and_exit(*cmd1, 1);
 }
 
 int	main(int ac, char **av, char **ev)
@@ -45,25 +52,15 @@ int	main(int ac, char **av, char **ev)
 	int		id2;
 
 	if (ac != 5)
-		exit(1);
+		error_and_exit("USAGE: ./pipex infile cmd1 cmd2 outfile\n" ,-9);
 	if (pipe(fd) == -1)
-	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
+		error_and_exit("pipe", 1);
 	id = fork();
 	if (id == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		error_and_exit("fork", 1);
 	if (id == 0)
 		child_1(av, fd, ev);
 	else
-	{
-		int k;
-		wait(&k);
 		parent(av, fd, ev);
-	}
 	return (0);
 }

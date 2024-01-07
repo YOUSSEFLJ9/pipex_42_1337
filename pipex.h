@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:13:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/07 04:26:39 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/07 07:34:21 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <fcntl.h>
 
 /* FUNCTIONS */
+void error_and_exit(char *s, int exit);
 void 	parent(char **av, int *fd, char **ev);
 char 	*find_path(char **ev);
 char	*ft_strchr(const char *s, int c);
