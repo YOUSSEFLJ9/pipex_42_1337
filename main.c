@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:08:26 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/07 22:49:25 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/08 15:36:25 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	child_2(char **av, int *fd, char **ev)
 	int		outfile;
 
 	close(fd[1]);
-	outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	outfile = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (outfile == -1)
 		error_and_exit(av[4], 1);
 	dup2(outfile, 1);
