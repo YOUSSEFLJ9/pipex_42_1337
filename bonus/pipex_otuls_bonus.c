@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_otuls.c                                      :+:      :+:    :+:   */
+/*   pipex_otuls_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/09 11:18:59 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/09 10:09:26 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,18 @@ void	execute_help(char **cmd1, char **ev)
 	paths = ft_strtok(paths, ":");
 	while (*paths)
 	{
-		tmp = ft_strjoin(paths, "/");
-		if (!tmp)
-			fr_split_exit(cmd1, "strjoin", 1);
-		command = ft_strjoin(tmp, cmd1[0]);
-		free(tmp);
+		command = ft_strjoin(paths, "/");
 		if (!command)
-			fr_split_exit(cmd1, "strjoin", 1);
+			// fr_split_exit(cmd1, "strjoin", 1);
+		tmp = command;
+		command = ft_strjoin(command, cmd1[0]);
+		// free(tmp);
+		if (!command)
+			// fr_split_exit(cmd1, "strjoin", 1);
 		if (execve(command, &cmd1[0], NULL) == -1)
 			paths = ft_strtok(NULL, ":");
-		free(command);
 	}
+	// free (command);
 }
 
 void	execute_cmd(char *av, char **ev)
@@ -65,9 +66,9 @@ void	execute_cmd(char *av, char **ev)
 	cmd1 = ft_split(av, ' ');
 	if (!cmd1)
 		error_and_exit("split", 1);
-	if (cmd1[0][0] == '/' || access(cmd1[0], F_OK) == 0)
-		execve(cmd1[0], &cmd1[0], ev);
+	if (access(cmd1[0], F_OK | X_OK) == 0)
+		execve(cmd1[0], cmd1, ev);
 	else
 		execute_help(cmd1, ev);
-	fr_split_exit(cmd1, av, 1);
+	// fr_split_exit(cmd1, av, 1);
 }
