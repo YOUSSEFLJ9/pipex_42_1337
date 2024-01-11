@@ -6,69 +6,30 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/09 10:09:26 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/11 15:28:53 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-void	error_and_exit(char *s, int exite)
+void wrt_on_pipe(int *fd, char *limiter)
 {
-	if (exite == -9)
+	char *line;
+	// if (close(fd[0]) == -1)
+	// 	error_and_exit("close", 1);
+	line = " ";
+	while (line)
 	{
-		write(2, s, ft_strlen(s));
-		exit (1);
+		line = get_next_line(0);
+		if (!line)
+			error_and_exit("can get the line from stdin.", -9);
+		if (ft_strncmp(line, limiter, ft_strlen(line) - 1) == 0)
+			{
+				free(line);
+				return ;
+			}
+		if (write(fd[1], line, ft_strlen(line)) == -1)
+			error_and_exit("write", 1);
+		free(line);
 	}
-	perror(s);
-	if (exite != 0)
-		exit(exite);
-}
-
-void	fr_split_exit(char **ptr, char *msg, int existut)
-{
-	int	i;
-
-	i = 0;
-	while (ptr && ptr[i])
-		i++;
-	freet(ptr, i);
-	error_and_exit(msg, existut);
-}
-
-void	execute_help(char **cmd1, char **ev)
-{
-	char	*paths;
-	char	*command;
-	char	*tmp;
-
-	paths = find_path(ev);
-	paths = ft_strtok(paths, ":");
-	while (*paths)
-	{
-		command = ft_strjoin(paths, "/");
-		if (!command)
-			// fr_split_exit(cmd1, "strjoin", 1);
-		tmp = command;
-		command = ft_strjoin(command, cmd1[0]);
-		// free(tmp);
-		if (!command)
-			// fr_split_exit(cmd1, "strjoin", 1);
-		if (execve(command, &cmd1[0], NULL) == -1)
-			paths = ft_strtok(NULL, ":");
-	}
-	// free (command);
-}
-
-void	execute_cmd(char *av, char **ev)
-{
-	char	**cmd1;
-
-	cmd1 = ft_split(av, ' ');
-	if (!cmd1)
-		error_and_exit("split", 1);
-	if (access(cmd1[0], F_OK | X_OK) == 0)
-		execve(cmd1[0], cmd1, ev);
-	else
-		execute_help(cmd1, ev);
-	// fr_split_exit(cmd1, av, 1);
 }
