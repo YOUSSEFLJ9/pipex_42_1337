@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/09 11:18:59 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/10 21:33:18 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	error_and_exit(char *s, int exite)
 		exit(exite);
 }
 
-void	fr_split_exit(char **ptr, char *msg, int existut)
+static void	fr_split_exit(char **ptr, char *msg, int existut)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ void	execute_help(char **cmd1, char **ev)
 		free(tmp);
 		if (!command)
 			fr_split_exit(cmd1, "strjoin", 1);
-		if (execve(command, &cmd1[0], NULL) == -1)
+		if (execve(command, &cmd1[0], ev) == -1)
 			paths = ft_strtok(NULL, ":");
 		free(command);
 	}
@@ -65,7 +65,7 @@ void	execute_cmd(char *av, char **ev)
 	cmd1 = ft_split(av, ' ');
 	if (!cmd1)
 		error_and_exit("split", 1);
-	if (cmd1[0][0] == '/' || access(cmd1[0], F_OK) == 0)
+	if (cmd1[0][0] == '/' || access(cmd1[0], F_OK | X_OK) == 0)
 		execve(cmd1[0], &cmd1[0], ev);
 	else
 		execute_help(cmd1, ev);
