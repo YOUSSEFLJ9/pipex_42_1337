@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:08:26 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/11 15:16:28 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/11 17:12:13 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	child(char **av, int *fd, char **ev)
 
 	if (close(fd[1]) == -1)
 		error_and_exit("close", 1);
-	outfile = open(av[5], O_CREAT | O_WRONLY | O_APPEND, 0777);
+	outfile = open(av[5], O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (outfile == -1)
 		error_and_exit(av[5], 1);
 	if (dup2(outfile, 1) == -1)
@@ -42,8 +42,10 @@ void	here_doc_hlp(int id, char **av, int *fd, char **ev)
 		child(av, fd, ev);
 	else
 	{
-		if (close(fd[0]) == -1 || close(fd[1]) == -1)
-			error_and_exit("close", 1);
+		// if (close(fd[0]) == -1 || close(fd[1]) == -1)
+		// 	error_and_exit("close", 1);
+		close(fd[0]);
+		close(fd[1]);
 		if (waitpid(id, NULL, 0) == -1)
 			error_and_exit("waitpid 1st child", 1);
 		if (waitpid(id2, NULL, 0) == -1)
@@ -69,6 +71,7 @@ void here_doc(int ac, char **av , char **ev)
 		if(pipe(fd2) == -1)
 			error_and_exit("pipe", 1);
 		wrt_on_pipe(fd2, av[2]);
+		close(fd2[1]);
 		dup2(fd2[0], 0);
 		close(fd2[0]);
 		dup2(fd[1], 1);
@@ -84,7 +87,5 @@ int	main(int ac, char **av, char **ev)
 		error_and_exit("USAGE: ./pipex infile cmd1 cmd2 ...cmdn outfile\n", -9);
 	if (ft_strncmp("here_doc", av[1], 9) == 0)
 		here_doc(ac, av , ev);
-	else
-		
 	return (0);
 }
