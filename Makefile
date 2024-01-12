@@ -2,7 +2,7 @@ CC =cc
 CFLAGS =-Wall -Wextra -Werror
 SRC =env_path.c ft_split.c ft_strchr.c ft_strjoin.c ft_strlen.c ft_strncmp.c ft_strtok.c main.c pipex_otuls.c
 OBJ =$(SRC:.c=.o)
-SRC_BNS = ft_split.c ft_strchr.c ft_strjoin.c ft_strlen.c ft_strncmp.c pipex_otuls.c env_path.c ft_strtok.c bonus/main_bonus.c bonus/pipex_otuls_bonus.c 
+SRC_BNS = ft_split.c ft_strchr.c ft_strjoin.c ft_strlen.c ft_strncmp.c pipex_otuls.c env_path.c ft_strtok.c bonus/main_bonus.c bonus/pipex_otuls_bonus.c bonus/get_next_line/get_next_line.c bonus/get_next_line/get_next_line_utils.c
 OBJ_B = $(SRC_BNS:.c=.o)
 NAME =pipex
 BNS_NAME = pipex_bonus
