@@ -23,7 +23,7 @@ void wrt_on_pipe(int *fd, char *limiter)
 		line = get_next_line(0);
 		if (!line)
 			error_and_exit("can get the line from stdin.", -9);
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		if ((ft_strncmp(line, limiter, ft_strlen(limiter)) == 0) && (ft_strlen(line) == ft_strlen(limiter) + 1))
 			{
 				free(line);
 				return ;

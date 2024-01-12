@@ -42,10 +42,8 @@ void	here_doc_hlp(int id, char **av, int *fd, char **ev)
 		child(av, fd, ev);
 	else
 	{
-		// if (close(fd[0]) == -1 || close(fd[1]) == -1)
-		// 	error_and_exit("close", 1);
-		close(fd[0]);
-		close(fd[1]);
+		if (close(fd[0]) == -1 || close(fd[1]) == -1)
+			error_and_exit("close", 1);
 		if (waitpid(id, NULL, 0) == -1)
 			error_and_exit("waitpid 1st child", 1);
 		if (waitpid(id2, NULL, 0) == -1)
