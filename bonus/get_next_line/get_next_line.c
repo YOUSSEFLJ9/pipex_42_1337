@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 00:32:36 by ymomen            #+#    #+#             */
-/*   Updated: 2023/11/22 17:59:34 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/14 20:16:05 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_next_line(int fd)
 
 	line = NULL;
 	endl = 0;
-	if ((read(fd, buf, 0) == -1) || (2048 < fd || fd < 0))
+	if ((read(fd, buf, 0) == -1) || (OPEN_MAX < fd || fd < 0))
 		return (shift(buf, BUFFER_SIZE), NULL);
 	if (*buf != 0)
 	{

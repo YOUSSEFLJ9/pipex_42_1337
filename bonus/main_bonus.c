@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:08:26 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/11 17:12:13 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/15 00:18:16 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void here_doc(int ac, char **av , char **ev)
 	int		id;
 	
 	if (ac != 6)
-		error_and_exit("ERROR USAGE: ./pipex here_doc LIMITER cmd cmd1 file\n", -9);
+		error_and_exit("ERROR USAGE: ./pipex_bonus here_doc LIMITER cmd cmd1 file\n", -9);
 	if(pipe(fd) == -1)
 		error_and_exit("pipe", 1);
 	id = fork();
@@ -85,5 +85,7 @@ int	main(int ac, char **av, char **ev)
 		error_and_exit("USAGE: ./pipex infile cmd1 cmd2 ...cmdn outfile\n", -9);
 	if (ft_strncmp("here_doc", av[1], 9) == 0)
 		here_doc(ac, av , ev);
+	else
+		multiple_process(ac, av, ev);
 	return (0);
 }
