@@ -6,11 +6,25 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:08:26 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/15 00:18:16 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/15 23:24:26 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+static void	open_close(int *fd, int *fd2)
+{
+	if (close(fd2[1]) == -1)
+		error_and_exit("close", 1);
+	if (dup2(fd2[0], 0) == -1)
+		error_and_exit("dup2", 1);
+	if (close(fd2[0]) == -1)
+		error_and_exit("close", 1);
+	if (dup2(fd[1], 1) == -1)
+		error_and_exit("dup2", 1);
+	if (close(fd[1]) == -1)
+		error_and_exit("close", 1);
+}
 
 void	child(char **av, int *fd, char **ev)
 {
@@ -31,11 +45,13 @@ void	child(char **av, int *fd, char **ev)
 		error_and_exit("close", 1);
 	execute_cmd(av[4], ev);
 }
+
 void	here_doc_hlp(int id, char **av, int *fd, char **ev)
 {
-	int id2; 
+	int	id2;
 
 	id2 = fork();
+	(void)id;
 	if (id2 == -1)
 		error_and_exit("fork", 1);
 	if (id2 == 0)
@@ -50,42 +66,42 @@ void	here_doc_hlp(int id, char **av, int *fd, char **ev)
 			error_and_exit("waitpid 2ed child", 1);
 	}
 }
-void here_doc(int ac, char **av , char **ev)
+
+void	here_doc(int ac, char **av, char **ev)
 {
 	int		fd[2];
 	int		fd2[2];
 	int		id;
-	
+
 	if (ac != 6)
-		error_and_exit("ERROR USAGE: ./pipex_bonus here_doc LIMITER cmd cmd1 file\n", -9);
-	if(pipe(fd) == -1)
+		error_and_exit(
+			"ERROR USAGE: ./pipex_bonus here_doc LIMITER cmd cmd1 file\n", -9);
+	if (pipe(fd) == -1)
 		error_and_exit("pipe", 1);
+	if (pipe(fd2) == -1)
+		error_and_exit("pipe", 1);
+	wrt_on_pipe(fd2, av[2]);
 	id = fork();
 	if (id == -1)
 		error_and_exit("fork", 1);
 	if (id == 0)
 	{
-		close(fd[0]);
-		if(pipe(fd2) == -1)
-			error_and_exit("pipe", 1);
-		wrt_on_pipe(fd2, av[2]);
-		close(fd2[1]);
-		dup2(fd2[0], 0);
-		close(fd2[0]);
-		dup2(fd[1], 1);
-		close(fd[1]);
+		if (close(fd[0]) == -1)
+			error_and_exit("close", 1);
+		open_close(fd, fd2);
 		execute_cmd(av[3], ev);
 	}
-	else
-		here_doc_hlp(id , av, fd, ev);
+	here_doc_hlp(id, av, fd, ev);
 }
+
 int	main(int ac, char **av, char **ev)
 {
 	if (ac < 5)
 		error_and_exit("USAGE: ./pipex infile cmd1 cmd2 ...cmdn outfile\n", -9);
 	if (ft_strncmp("here_doc", av[1], 9) == 0)
-		here_doc(ac, av , ev);
+		here_doc(ac, av, ev);
 	else
 		multiple_process(ac, av, ev);
-	return (0);
+	while (wait(NULL) == -1)
+		;
 }

@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:13:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/10 22:31:55 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/15 19:14:03 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
@@ -26,7 +26,7 @@ void	execute_help(char **cmd1, char **ev);
 char	**freet(char **ptr, int i);
 void	error_and_exit(char *s, int exit);
 void	parent(char **av, int *fd, char **ev);
-char	*find_path(char **ev);
+char	*find_path(char **ev, char *vr_env);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strtok(char *str, char *delimter);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

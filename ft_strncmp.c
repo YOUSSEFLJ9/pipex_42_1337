@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 23:24:44 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/11 16:10:16 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/15 19:13:50 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
-
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

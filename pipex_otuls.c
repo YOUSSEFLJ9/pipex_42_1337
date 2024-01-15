@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/10 21:33:18 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/15 19:14:19 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execute_help(char **cmd1, char **ev)
 	char	*command;
 	char	*tmp;
 
-	paths = find_path(ev);
+	paths = find_path(ev, "PATH");
 	paths = ft_strtok(paths, ":");
 	while (*paths)
 	{
