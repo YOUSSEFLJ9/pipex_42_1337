@@ -1,0 +1,37 @@
+Makefile
+bonus
+env_path.c
+ft_split.c
+ft_strchr.c
+ft_strjoin.c
+ft_strlen.c
+ft_strncmp.c
+ft_strtok.c
+infile
+main.c
+outfile
+pipex
+pipex.h
+pipex_bonus
+pipex_otuls.c
+Process:         pipex [66116]
+Path:            /Volumes/VOLUME/*/pipex
+Load Address:    0x109138000
+Identifier:      pipex
+Version:         ???
+Code Type:       X86-64
+Platform:        macOS
+Parent Process:  zsh [52237]
+
+Date/Time:       2024-01-15 23:21:21.278 +0100
+Launch Time:     2024-01-15 22:43:12.337 +0100
+OS Version:      Mac OS X 10.15.7 (19H2026)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 12.4 (12D4e)
+----
+
+leaks Report Version: 4.0
+Process 66116: 156 nodes malloced for 8 KB
+Process 66116: 0 leaks for 0 total leaked bytes.
+

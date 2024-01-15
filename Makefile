@@ -10,7 +10,7 @@ HEADER = pipex.h
 HEADERB = bonus/pipex_bonus.h
 RM =rm -f
 
-%.o : %.c $(HEADER)
+%.o : %.c $(HEADER) $(HEADERB)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
@@ -18,7 +18,7 @@ all: $(NAME)
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-bonus: $(OBJ_B) $(HEADERB)
+bonus: $(OBJ_B)
 	$(CC) $(CFLAGS) $(OBJ_B) -o $(BNS_NAME)
 
 clean:
