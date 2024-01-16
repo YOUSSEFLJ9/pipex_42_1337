@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/15 23:31:49 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/16 17:16:31 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,21 @@ void	child_process(char *av, char **ev)
 		close(fd[1]);
 		execute_cmd(av, ev);
 	}
-	dup2(fd[0], 0);
 	close(fd[0]);
+	dup2(fd[0], 0);
 	close(fd[1]);
 }
 
-void	multiple_process(int ac, char **av, char **ev)
+void	multiple_process(int ac, char **av, char **ev, int infile)
 {
-	int	infile;
 	int	outfile;
 	int	cont;
 	int	pid;
 
 	cont = 2;
 	outfile = open_file(av[ac - 1], 'c');
-	infile = open_file(av[1], 'o');
+	if (infile == -2)
+		infile = open_file(av[1], 'o');
 	dup2(infile, 0);
 	close(infile);
 	dup2(outfile, 1);
@@ -92,4 +92,9 @@ void	multiple_process(int ac, char **av, char **ev)
 		error_and_exit("fork", 1);
 	if (pid == 0)
 		execute_cmd(av[ac - 2], ev);
+	else
+	{
+		while (waitpid(-1, NULL, 0) != -1)
+			;
+	}
 }
