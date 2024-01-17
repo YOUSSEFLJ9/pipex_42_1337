@@ -7,7 +7,7 @@ OBJ_B = $(SRC_BNS:.c=.o)
 NAME =pipex
 NAME_BNS =pipex_bonus
 HEADER = pipex.h
-HEADERB = bonus/pipex_bonus.h
+# HEADERB = bonus/pipex_bonus.h
 RM =rm -rf
 
 %.o : %.c $(HEADER)
@@ -18,7 +18,7 @@ all: $(NAME)
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-bonus: $(OBJ_B) $(HEADERB)
+bonus: $(OBJ_B) 
 	$(CC) $(CFLAGS) $(OBJ_B) -o $(NAME_BNS)
 
 clean:

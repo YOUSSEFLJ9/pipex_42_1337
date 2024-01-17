@@ -6,11 +6,11 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/16 17:16:31 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/17 11:29:38 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../pipex.h"
 
 void	wrt_on_pipe(int *fd, char *limiter)
 {
@@ -29,7 +29,7 @@ void	wrt_on_pipe(int *fd, char *limiter)
 			free(line);
 			return ;
 		}
-		if (write(fd[1], line, ft_strlen(line)) == -1)
+		if (write(fd[0], line, ft_strlen(line)) == -1)
 			error_and_exit("write", 1);
 		free(line);
 	}
@@ -66,9 +66,9 @@ void	child_process(char *av, char **ev)
 		close(fd[1]);
 		execute_cmd(av, ev);
 	}
-	close(fd[0]);
-	dup2(fd[0], 0);
 	close(fd[1]);
+	dup2(fd[0], 0);
+	close(fd[0]);
 }
 
 void	multiple_process(int ac, char **av, char **ev, int infile)
@@ -92,9 +92,8 @@ void	multiple_process(int ac, char **av, char **ev, int infile)
 		error_and_exit("fork", 1);
 	if (pid == 0)
 		execute_cmd(av[ac - 2], ev);
-	else
-	{
-		while (waitpid(-1, NULL, 0) != -1)
-			;
-	}
+	close(0);
+	close(1);
+	while (waitpid(-1, NULL, 0) != -1)
+		;
 }
