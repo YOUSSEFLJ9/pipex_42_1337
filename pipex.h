@@ -6,21 +6,17 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:13:33 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/21 01:43:54 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/21 21:08:34 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 # include "bonus/get_next_line/get_next_line.h"
-# include <unistd.h>
-# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include <stdio.h>
-# include <string.h>
-# include <fcntl.h>
-
 /* FUNCTIONS */
 void	execute_cmd(char *av, char **ev);
 void	execute_help(char **cmd1, char **ev);
@@ -40,5 +36,4 @@ char	**ft_split(char const *s, char c);
 void	here_doc(int ac, char **av, char **ev);
 void	wrt_on_pipe(int *fd, char *limiter);
 void	multiple_process(int ac, char **av, char **ev, int infile);
-
 #endif

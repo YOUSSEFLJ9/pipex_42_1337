@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 00:32:33 by ymomen            #+#    #+#             */
-/*   Updated: 2023/11/22 17:45:11 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/21 21:08:23 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <limits.h>
-
 /* FUNCTIONS */
 char	*read_and_getline(char *buf, int fd, char *line);
 void	free_it(char *str);

@@ -9,7 +9,7 @@ NAME_BNS =pipex_bonus
 HEADER = pipex.h
 RM =rm -rf
 
-%.o : %.c $(HEADER)
+%.o : %.c $(HEADER) bonus/get_next_line/get_next_line.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
