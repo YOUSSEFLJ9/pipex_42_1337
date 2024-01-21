@@ -7,7 +7,6 @@ OBJ_B = $(SRC_BNS:.c=.o)
 NAME =pipex
 NAME_BNS =pipex_bonus
 HEADER = pipex.h
-# HEADERB = bonus/pipex_bonus.h
 RM =rm -rf
 
 %.o : %.c $(HEADER)

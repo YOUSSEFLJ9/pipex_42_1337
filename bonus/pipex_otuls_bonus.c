@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/17 11:29:38 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/21 01:50:10 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	multiple_process(int ac, char **av, char **ev, int infile)
 	outfile = open_file(av[ac - 1], 'c');
 	if (infile == -2)
 		infile = open_file(av[1], 'o');
+	else
+		infile = open_file("/tmp/here_doc", 'o');
 	dup2(infile, 0);
 	close(infile);
 	dup2(outfile, 1);
