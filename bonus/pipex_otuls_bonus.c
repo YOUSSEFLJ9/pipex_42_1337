@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/21 01:50:10 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/21 20:50:58 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	wrt_on_pipe(int *fd, char *limiter)
 			free(line);
 			return ;
 		}
-		if (write(fd[0], line, ft_strlen(line)) == -1)
+		if (write(*fd, line, ft_strlen(line)) == -1)
 			error_and_exit("write", 1);
 		free(line);
 	}
