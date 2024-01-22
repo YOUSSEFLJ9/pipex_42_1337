@@ -6,7 +6,7 @@
 /*   By: ymomen <ymomen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 21:08:31 by ymomen            #+#    #+#             */
-/*   Updated: 2024/01/21 20:50:58 by ymomen           ###   ########.fr       */
+/*   Updated: 2024/01/22 14:52:47 by ymomen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	open_file(char *av, char c)
 		fd = open(av, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (c == 'o')
 		fd = open(av, O_RDONLY);
+	else if (c == 'a')
+		fd = open(av, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		error_and_exit("open", 1);
 	return (fd);
@@ -78,11 +80,16 @@ void	multiple_process(int ac, char **av, char **ev, int infile)
 	int	pid;
 
 	cont = 2;
-	outfile = open_file(av[ac - 1], 'c');
 	if (infile == -2)
+	{
 		infile = open_file(av[1], 'o');
+		outfile = open_file(av[ac - 1], 'c');
+	}
 	else
+	{
 		infile = open_file("/tmp/here_doc", 'o');
+		outfile = open_file(av[ac - 1], 'a');
+	}
 	dup2(infile, 0);
 	close(infile);
 	dup2(outfile, 1);
